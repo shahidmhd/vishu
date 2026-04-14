@@ -6,8 +6,8 @@ const nextConfig = {
     unoptimized: true,
   },
   // Set basePath to your repo name for GitHub Pages project repos
-  basePath: '/vishu-festival',
-  assetPrefix: '/vishu-festival/',
+  basePath: '/vishu',
+  assetPrefix: '/vishu/',
 }
 
 module.exports = nextConfig

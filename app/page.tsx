@@ -65,7 +65,7 @@ export default function HomePage() {
                 className="text-3xl md:text-5xl font-bold shimmer-text"
                 style={{ fontFamily: 'Georgia, serif', lineHeight: 1.3 }}
               >
-                Vishu 2025
+                Vishu 2026
               </h1>
 
               <motion.p
