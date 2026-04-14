@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 import './globals.css'
+
+// Replace with your actual GA4 Measurement ID from analytics.google.com
+const GA_ID = 'G-3F4QXEGMML'
 
 export const metadata: Metadata = {
   title: 'Happy Vishu 💛 | ഹാപ്പി വിഷു',
@@ -25,7 +29,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}', {
+              page_path: window.location.pathname + window.location.search,
+            });
+          `}
+        </Script>
+      </body>
     </html>
   )
 }
