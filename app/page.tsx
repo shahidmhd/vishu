@@ -15,6 +15,52 @@ const MusicToggle      = dynamic(() => import('./components/MusicToggle'),      
 const PersonalizePanel = dynamic(() => import('./components/PersonalizePanel'), { ssr: false })
 const KaineetamPay     = dynamic(() => import('./components/KaineetamPay'),     { ssr: false })
 
+function CopyUrlButton() {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }, [])
+  return (
+    <motion.button
+      onClick={handleCopy}
+      className="fixed bottom-10 right-4 z-40 flex items-center gap-2 px-3 py-2 rounded-full backdrop-blur-sm"
+      style={{
+        background: 'rgba(13,43,30,0.75)',
+        border: '1px solid rgba(244,196,48,0.35)',
+        color: copied ? '#4ade80' : '#f4c430',
+        boxShadow: '0 0 12px rgba(244,196,48,0.15)',
+      }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 2 }}
+      whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(244,196,48,0.3)' }}
+      whileTap={{ scale: 0.95 }}
+      aria-label="Copy page URL"
+    >
+      <AnimatePresence mode="wait">
+        {copied ? (
+          <motion.svg key="check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+            initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </motion.svg>
+        ) : (
+          <motion.svg key="copy" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+            initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
+          >
+            <rect x="9" y="9" width="13" height="13" rx="2" />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+          </motion.svg>
+        )}
+      </AnimatePresence>
+      <span className="text-xs font-medium">{copied ? 'Copied!' : 'Copy Link'}</span>
+    </motion.button>
+  )
+}
+
 function HomeContent() {
   const searchParams = useSearchParams()
 
@@ -49,6 +95,7 @@ function HomeContent() {
       <Background />
       <FloatingPetalsComponent />
       <MusicToggle />
+      <CopyUrlButton />
       <PersonalizePanel
         currentName={recipientName}
         onNameChange={setRecipientName}

@@ -199,7 +199,7 @@ export default function PersonalizePanel({
               onClick={close}
             />
             <motion.div
-              className="fixed inset-x-0 bottom-0 z-[70] mx-auto max-w-md rounded-t-3xl overflow-hidden"
+              className="fixed inset-x-0 bottom-0 z-[70] mx-auto max-w-md rounded-t-3xl overflow-hidden relative"
               style={{
                 background: 'linear-gradient(170deg, #071a10 0%, #0d2b1e 100%)',
                 border: '1px solid rgba(244,196,48,0.2)',
@@ -233,6 +233,18 @@ export default function PersonalizePanel({
               </div>
 
               <div className="p-6 pb-10">
+                {/* Close button */}
+                <button
+                  onClick={close}
+                  className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-all"
+                  style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(244,196,48,0.2)', color: '#f4c430' }}
+                  aria-label="Close"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
                 <div className="w-10 h-1 rounded-full bg-amber-700/40 mx-auto mb-4" />
 
                 <AnimatePresence mode="wait">
