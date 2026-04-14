@@ -21,10 +21,22 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   background: #0d2b1e;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 body {
   font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* Safe area for notched phones */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 12px);
+}
+
+/* Prevent text size auto-adjust on iOS */
+* {
+  -webkit-text-size-adjust: 100%;
 }
 
 /* Custom scrollbar */

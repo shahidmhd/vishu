@@ -169,7 +169,7 @@ export default function PersonalizePanel({
       {/* Trigger button */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-50 flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm"
+        className="fixed top-3 left-3 md:top-4 md:left-4 z-50 flex items-center gap-2 px-3 md:px-4 py-2 rounded-full backdrop-blur-sm"
         style={{
           background: 'rgba(13,43,30,0.75)',
           border: '1px solid rgba(244,196,48,0.4)',
@@ -203,7 +203,8 @@ export default function PersonalizePanel({
               style={{
                 background: 'linear-gradient(170deg, #071a10 0%, #0d2b1e 100%)',
                 border: '1px solid rgba(244,196,48,0.2)',
-                maxHeight: '92vh', overflowY: 'auto',
+                maxHeight: '92dvh', overflowY: 'auto',
+                paddingBottom: 'env(safe-area-inset-bottom, 0px)',
                 boxShadow: '0 -8px 50px rgba(0,0,0,0.7)',
               }}
               initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}

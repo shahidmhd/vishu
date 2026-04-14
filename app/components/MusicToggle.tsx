@@ -143,7 +143,7 @@ export default function MusicToggle() {
   return (
     <motion.button
       onClick={toggle}
-      className="fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm"
+      className="fixed top-3 right-3 md:top-4 md:right-4 z-50 flex items-center gap-2 px-3 md:px-4 py-2 rounded-full backdrop-blur-sm"
       style={{
         background: 'rgba(13, 43, 30, 0.7)',
         border: '1px solid rgba(244,196,48,0.4)',

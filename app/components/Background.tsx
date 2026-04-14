@@ -80,6 +80,7 @@ function KonnaBranch({ side = 'left' }: { side?: 'left' | 'right' }) {
   return (
     <motion.div
       className={`absolute top-0 ${isLeft ? 'left-0' : 'right-0'} pointer-events-none`}
+      style={{ transform: isLeft ? `scale(0.55) translateX(-40%)` : `scale(0.55) translateX(40%)`, transformOrigin: 'top center' }}
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.5, ease: 'easeOut' }}

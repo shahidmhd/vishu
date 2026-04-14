@@ -207,7 +207,7 @@ export default function GiftBox({ name = '', onOpen, onReplay }: GiftBoxProps) {
     <>
       <BurstParticles active={showBurst} count={100} />
 
-      <div className="flex flex-col items-center gap-8">
+      <div className="flex flex-col items-center gap-4 md:gap-8 w-full px-4">
         {/* Pre-open hint text */}
         <AnimatePresence>
           {!isOpened && (
@@ -272,7 +272,7 @@ export default function GiftBox({ name = '', onOpen, onReplay }: GiftBoxProps) {
           <AnimatePresence>
             {!isOpened && (
               <motion.div
-                className="relative cursor-pointer select-none z-20"
+                className="relative cursor-pointer select-none z-20 scale-75 sm:scale-90 md:scale-100"
                 initial={{ scale: 0, rotate: -10 }}
                 animate={{
                   scale: 1,
@@ -451,7 +451,7 @@ export default function GiftBox({ name = '', onOpen, onReplay }: GiftBoxProps) {
 
               {/* Main message */}
               <motion.h2
-                className="text-5xl md:text-7xl font-bold mb-3 shimmer-text glow-text"
+                className="text-4xl sm:text-5xl md:text-7xl font-bold mb-3 shimmer-text glow-text"
                 style={{ fontFamily: 'Georgia, serif', lineHeight: 1.2 }}
                 animate={{ scale: [1, 1.03, 1] }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -463,7 +463,7 @@ export default function GiftBox({ name = '', onOpen, onReplay }: GiftBoxProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.9, duration: 0.6, type: 'spring' }}
-                className="text-4xl md:text-6xl font-bold shimmer-text"
+                className="text-3xl sm:text-4xl md:text-6xl font-bold shimmer-text"
                 style={{ fontFamily: 'Georgia, serif' }}
               >
                 {name}

@@ -28,7 +28,7 @@ export default function KaineetamPay({ upiId, fromName, amount }: KaineetamPayPr
       {/* Floating pay button — appears after gift opens */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-5 py-2.5 rounded-full"
+        className="flex items-center gap-2 px-4 md:px-5 py-2.5 rounded-full max-w-xs text-center"
         style={{
           background: 'linear-gradient(135deg, rgba(244,196,48,0.2), rgba(255,140,0,0.2))',
           border: '1px solid rgba(244,196,48,0.5)',
@@ -64,7 +64,8 @@ export default function KaineetamPay({ upiId, fromName, amount }: KaineetamPayPr
               style={{
                 background: 'linear-gradient(170deg, #071a10 0%, #0d2b1e 100%)',
                 border: '1px solid rgba(244,196,48,0.25)',
-                maxHeight: '85vh', overflowY: 'auto',
+                maxHeight: '92dvh', overflowY: 'auto',
+                paddingBottom: 'env(safe-area-inset-bottom, 0px)',
                 boxShadow: '0 -8px 50px rgba(0,0,0,0.7)',
               }}
               initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}

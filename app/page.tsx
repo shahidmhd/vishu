@@ -26,7 +26,7 @@ function CopyUrlButton() {
   return (
     <motion.button
       onClick={handleCopy}
-      className="fixed bottom-10 right-4 z-40 flex items-center gap-2 px-3 py-2 rounded-full backdrop-blur-sm"
+      className="fixed bottom-14 right-3 z-40 flex items-center gap-2 px-3 py-2 rounded-full backdrop-blur-sm"
       style={{
         background: 'rgba(13,43,30,0.75)',
         border: '1px solid rgba(244,196,48,0.35)',
@@ -103,7 +103,7 @@ function HomeContent() {
         currentPhoto={recipientPhoto}
       />
 
-      <div className="relative z-20 flex flex-col items-center justify-center w-full px-4 py-12 min-h-screen gap-6">
+      <div className="relative z-20 flex flex-col items-center justify-center w-full px-3 py-8 md:py-12 min-h-screen gap-3 md:gap-6">
 
         {/* Header before open */}
         <AnimatePresence>
