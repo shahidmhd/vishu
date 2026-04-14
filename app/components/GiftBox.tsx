@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { BurstParticles } from './Particles'
 
 interface GiftBoxProps {
+  name?: string
   onOpen?: () => void
   onReplay?: () => void
 }
@@ -176,7 +177,7 @@ function OpenBoxBody() {
   )
 }
 
-export default function GiftBox({ onOpen, onReplay }: GiftBoxProps) {
+export default function GiftBox({ name = 'Shanu', onOpen, onReplay }: GiftBoxProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isOpened, setIsOpened] = useState(false)
   const [showBurst, setShowBurst] = useState(false)
@@ -465,7 +466,7 @@ export default function GiftBox({ onOpen, onReplay }: GiftBoxProps) {
                 className="text-4xl md:text-6xl font-bold shimmer-text"
                 style={{ fontFamily: 'Georgia, serif' }}
               >
-                Shanu 💛
+                {name} 💛
               </motion.h3>
 
               <motion.p

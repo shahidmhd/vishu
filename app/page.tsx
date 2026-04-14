@@ -1,80 +1,82 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import { useSearchParams } from 'next/navigation'
 
-// All components use Math.random() or browser APIs — must be client-only
-const Background   = dynamic(() => import('./components/Background'),   { ssr: false })
-const GiftBox      = dynamic(() => import('./components/GiftBox'),      { ssr: false })
+const Background              = dynamic(() => import('./components/Background'),   { ssr: false })
+const GiftBox                 = dynamic(() => import('./components/GiftBox'),      { ssr: false })
 const FloatingPetalsComponent = dynamic(
   () => import('./components/Particles').then(m => ({ default: m.FloatingPetals })),
   { ssr: false }
 )
-const MusicToggle  = dynamic(() => import('./components/MusicToggle'),  { ssr: false })
+const MusicToggle      = dynamic(() => import('./components/MusicToggle'),      { ssr: false })
+const PersonalizePanel = dynamic(() => import('./components/PersonalizePanel'), { ssr: false })
+const KaineetamPay     = dynamic(() => import('./components/KaineetamPay'),     { ssr: false })
 
-export default function HomePage() {
+function HomeContent() {
+  const searchParams = useSearchParams()
+
+  // URL params
+  const paramTo   = searchParams.get('to')
+  const paramUpi  = searchParams.get('upi')
+  const paramFrom = searchParams.get('from')
+  const paramAmt  = searchParams.get('amt')
+
+  const [recipientName, setRecipientName] = useState(paramTo || 'Shanu')
+  const [recipientPhoto, setRecipientPhoto] = useState<string | null>(null)
   const [isOpened, setIsOpened] = useState(false)
 
-  const handleOpen = useCallback(() => {
-    setIsOpened(true)
-  }, [])
+  // Load saved photo from localStorage
+  useEffect(() => {
+    const name = searchParams.get('to') || 'Shanu'
+    setRecipientName(name)
+    try {
+      const stored = localStorage.getItem(`vishu_photo_${name}`)
+      if (stored) setRecipientPhoto(stored)
+    } catch {}
+  }, [searchParams])
 
-  const handleReplay = useCallback(() => {
-    setIsOpened(false)
-  }, [])
+  const handleOpen   = useCallback(() => setIsOpened(true),  [])
+  const handleReplay = useCallback(() => setIsOpened(false), [])
 
   return (
     <main
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
       style={{ minHeight: '100dvh' }}
     >
-      {/* Fixed background layer */}
       <Background />
-
-      {/* Floating petals (canvas) */}
       <FloatingPetalsComponent />
-
-      {/* Music toggle */}
       <MusicToggle />
+      <PersonalizePanel
+        currentName={recipientName}
+        onNameChange={setRecipientName}
+        onPhotoChange={setRecipientPhoto}
+        currentPhoto={recipientPhoto}
+      />
 
-      {/* Main content — sits above background */}
       <div className="relative z-20 flex flex-col items-center justify-center w-full px-4 py-12 min-h-screen gap-6">
 
-        {/* Header */}
+        {/* Header before open */}
         <AnimatePresence>
           {!isOpened && (
-            <motion.div
-              className="text-center"
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -40, scale: 0.9 }}
-              transition={{ duration: 1, ease: 'easeOut' }}
+            <motion.div className="text-center"
+              initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40, scale: 0.9 }} transition={{ duration: 1 }}
             >
-              {/* Decorative top ornament */}
-              <motion.div
-                className="flex items-center justify-center gap-3 mb-2"
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 3, repeat: Infinity }}
+              <motion.div className="flex items-center justify-center gap-3 mb-2"
+                animate={{ opacity: [0.6, 1, 0.6] }} transition={{ duration: 3, repeat: Infinity }}
               >
                 <span className="text-amber-400 text-lg">✦</span>
-                <span className="text-amber-300 text-xs tracking-[0.4em] uppercase font-light">
-                  Kerala Festival
-                </span>
+                <span className="text-amber-300 text-xs tracking-[0.4em] uppercase font-light">Kerala Festival</span>
                 <span className="text-amber-400 text-lg">✦</span>
               </motion.div>
-
-              <h1
-                className="text-3xl md:text-5xl font-bold shimmer-text"
-                style={{ fontFamily: 'Georgia, serif', lineHeight: 1.3 }}
-              >
+              <h1 className="text-3xl md:text-5xl font-bold shimmer-text" style={{ fontFamily: 'Georgia, serif', lineHeight: 1.3 }}>
                 Vishu 2026
               </h1>
-
-              <motion.p
-                className="text-amber-200 text-xs md:text-sm mt-1 tracking-wider"
-                animate={{ opacity: [0.5, 0.9, 0.5] }}
-                transition={{ duration: 4, repeat: Infinity }}
+              <motion.p className="text-amber-200 text-xs md:text-sm mt-1 tracking-wider"
+                animate={{ opacity: [0.5, 0.9, 0.5] }} transition={{ duration: 4, repeat: Infinity }}
               >
                 വിഷു ആശംസകൾ
               </motion.p>
@@ -82,64 +84,88 @@ export default function HomePage() {
           )}
         </AnimatePresence>
 
-        {/* Opened header */}
+        {/* Header after open */}
         <AnimatePresence>
           {isOpened && (
-            <motion.div
-              className="text-center"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
+            <motion.div className="text-center"
+              initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
-              <motion.div
-                className="flex items-center justify-center gap-3"
-                animate={{ opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 2, repeat: Infinity }}
+              <motion.div className="flex items-center justify-center gap-3"
+                animate={{ opacity: [0.7, 1, 0.7] }} transition={{ duration: 2, repeat: Infinity }}
               >
                 <span className="text-amber-400 text-2xl">✦</span>
-                <span className="text-amber-300 text-sm tracking-[0.3em] uppercase font-light">
-                  Vishu Kaineetam 2026
-                </span>
+                <span className="text-amber-300 text-sm tracking-[0.3em] uppercase font-light">Vishu Kaineetam 2026</span>
                 <span className="text-amber-400 text-2xl">✦</span>
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Gift box — center stage */}
-        <div className="flex items-center justify-center">
-          <GiftBox onOpen={handleOpen} onReplay={handleReplay} />
-        </div>
+        {/* Recipient photo (shown after open) */}
+        <AnimatePresence>
+          {isOpened && recipientPhoto && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
+              className="relative"
+            >
+              <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden"
+                style={{ border: '3px solid rgba(244,196,48,0.6)', boxShadow: '0 0 20px rgba(244,196,48,0.4)' }}
+              >
+                <img src={recipientPhoto} alt={recipientName} className="w-full h-full object-cover" />
+              </div>
+              <motion.div className="absolute inset-0 rounded-full"
+                animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ border: '2px solid rgba(244,196,48,0.4)' }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* Decorative divider */}
-        <motion.div
-          className="flex items-center gap-3 w-full max-w-xs"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
-          transition={{ delay: 1.5 }}
+        {/* Gift box */}
+        <GiftBox name={recipientName} onOpen={handleOpen} onReplay={handleReplay} />
+
+        {/* Kaineetam pay button — only shown after open, only if UPI in URL */}
+        <AnimatePresence>
+          {isOpened && paramUpi && (
+            <KaineetamPay
+              upiId={paramUpi}
+              fromName={paramFrom || ''}
+              amount={paramAmt || ''}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Divider */}
+        <motion.div className="flex items-center gap-3 w-full max-w-xs"
+          initial={{ opacity: 0 }} animate={{ opacity: 0.5 }} transition={{ delay: 1.5 }}
         >
           <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, transparent, #f4c430)' }} />
-          <svg width="14" height="14" viewBox="0 0 14 14">
-            <path d="M7 0 L7.5 6 L14 7 L7.5 8 L7 14 L6.5 8 L0 7 L6.5 6 Z" fill="#f4c430" />
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 0 L7.5 6 L14 7 L7.5 8 L7 14 L6.5 8 L0 7 L6.5 6 Z" fill="#f4c430" /></svg>
           <div className="flex-1 h-px" style={{ background: 'linear-gradient(to left, transparent, #f4c430)' }} />
         </motion.div>
       </div>
 
-      {/* Footer */}
-      <motion.footer
-        className="fixed bottom-4 left-0 right-0 text-center z-30"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
+      <motion.footer className="fixed bottom-4 left-0 right-0 text-center z-30"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}
       >
-        <p
-          className="text-xs text-amber-700"
-          style={{ textShadow: '0 0 8px rgba(120,80,0,0.5)' }}
-        >
-          Made with ❤️ for Vishu
-        </p>
+        <p className="text-xs text-amber-700">Made with ❤️ for Vishu</p>
       </motion.footer>
     </main>
+  )
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0d2b1e' }}>
+        <div className="text-amber-400 text-sm animate-pulse">Loading...</div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   )
 }

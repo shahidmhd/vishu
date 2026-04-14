@@ -6,8 +6,11 @@ const nextConfig = {
     unoptimized: true,
   },
   // Set basePath to your repo name for GitHub Pages project repos
-  basePath: '/vishu',
-  assetPrefix: '/vishu/',
+  // Comment these out for local dev, uncomment before pushing to GitHub
+  ...(process.env.NODE_ENV === 'production' ? {
+    basePath: '/vishu',
+    assetPrefix: '/vishu/',
+  } : {}),
 }
 
 module.exports = nextConfig
