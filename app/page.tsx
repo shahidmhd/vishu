@@ -3,12 +3,15 @@
 import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import Background from './components/Background'
-import GiftBox from './components/GiftBox'
-import { FloatingPetals } from './components/Particles'
 
-// Lazy-load music toggle (uses Web Audio API — not SSR-safe)
-const MusicToggle = dynamic(() => import('./components/MusicToggle'), { ssr: false })
+// All components use Math.random() or browser APIs — must be client-only
+const Background   = dynamic(() => import('./components/Background'),   { ssr: false })
+const GiftBox      = dynamic(() => import('./components/GiftBox'),      { ssr: false })
+const FloatingPetalsComponent = dynamic(
+  () => import('./components/Particles').then(m => ({ default: m.FloatingPetals })),
+  { ssr: false }
+)
+const MusicToggle  = dynamic(() => import('./components/MusicToggle'),  { ssr: false })
 
 export default function HomePage() {
   const [isOpened, setIsOpened] = useState(false)
@@ -30,7 +33,7 @@ export default function HomePage() {
       <Background />
 
       {/* Floating petals (canvas) */}
-      <FloatingPetals />
+      <FloatingPetalsComponent />
 
       {/* Music toggle */}
       <MusicToggle />
