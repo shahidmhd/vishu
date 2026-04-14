@@ -95,7 +95,7 @@ export default function HomePage() {
               >
                 <span className="text-amber-400 text-2xl">✦</span>
                 <span className="text-amber-300 text-sm tracking-[0.3em] uppercase font-light">
-                  Vishu Kaineetam 2025
+                  Vishu Kaineetam 2026
                 </span>
                 <span className="text-amber-400 text-2xl">✦</span>
               </motion.div>
