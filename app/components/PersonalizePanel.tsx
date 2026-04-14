@@ -25,7 +25,7 @@ export default function PersonalizePanel({
   const [step, setStep]           = useState<Step>('form')
 
   // Gift details
-  const [nameInput, setNameInput] = useState(currentName === 'Shanu' ? '' : currentName)
+  const [nameInput, setNameInput] = useState(currentName || '')
   const [photo, setPhoto]         = useState<string | null>(currentPhoto)
 
   // UPI details (sender)
@@ -114,7 +114,7 @@ export default function PersonalizePanel({
   }, [nameInput, onPhotoChange])
 
   const goToUpiStep = useCallback(() => {
-    const name = nameInput.trim() || 'Shanu'
+    const name = nameInput.trim()
     onNameChange(name)
     const url = new URL(window.location.href)
     url.searchParams.set('to', name)
@@ -138,7 +138,7 @@ export default function PersonalizePanel({
   }, [skipUpi, upiId, senderName, amount, shareUrl])
 
   const handleShare = useCallback(async () => {
-    const name = nameInput.trim() || 'Shanu'
+    const name = nameInput.trim()
     if (navigator.share) {
       try {
         await navigator.share({
@@ -289,7 +289,7 @@ export default function PersonalizePanel({
                           style={{ background: 'rgba(244,196,48,0.1)', border: '1px solid rgba(244,196,48,0.25)' }}
                         >
                           <span className="text-amber-600 text-xs">Preview:</span>
-                          <span className="text-amber-300 text-xs font-semibold">Happy Vishu {nameInput.trim()} 💛</span>
+                          <span className="text-amber-300 text-xs font-semibold">Happy Vishu {nameInput.trim()}</span>
                         </motion.div>
                       )}
 

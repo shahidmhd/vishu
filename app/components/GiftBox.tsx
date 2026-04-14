@@ -177,7 +177,7 @@ function OpenBoxBody() {
   )
 }
 
-export default function GiftBox({ name = 'Shanu', onOpen, onReplay }: GiftBoxProps) {
+export default function GiftBox({ name = '', onOpen, onReplay }: GiftBoxProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isOpened, setIsOpened] = useState(false)
   const [showBurst, setShowBurst] = useState(false)
@@ -466,7 +466,7 @@ export default function GiftBox({ name = 'Shanu', onOpen, onReplay }: GiftBoxPro
                 className="text-4xl md:text-6xl font-bold shimmer-text"
                 style={{ fontFamily: 'Georgia, serif' }}
               >
-                {name} 💛
+                {name}
               </motion.h3>
 
               <motion.p

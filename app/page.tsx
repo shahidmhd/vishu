@@ -24,13 +24,13 @@ function HomeContent() {
   const paramFrom = searchParams.get('from')
   const paramAmt  = searchParams.get('amt')
 
-  const [recipientName, setRecipientName] = useState(paramTo || 'Shanu')
+  const [recipientName, setRecipientName] = useState(paramTo || '')
   const [recipientPhoto, setRecipientPhoto] = useState<string | null>(null)
   const [isOpened, setIsOpened] = useState(false)
 
   // Load saved photo from localStorage
   useEffect(() => {
-    const name = searchParams.get('to') || 'Shanu'
+    const name = searchParams.get('to') || ''
     setRecipientName(name)
     try {
       const stored = localStorage.getItem(`vishu_photo_${name}`)
